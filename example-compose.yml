@@ -9,3 +9,4 @@ espeak-bot:
     - BOT_TOKEN= Telegram Bot API token
     - BOT_URL= Telegram Bot URL
     - CERTIFICATE_PATH=/tmp/cert.pem
+    - PORT=5000

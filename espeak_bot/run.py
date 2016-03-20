@@ -4,7 +4,7 @@ import time
 
 from telegram import Updater
 
-from espeak_bot import CERTIFICATE_PATH, BOT_URL
+from espeak_bot import CERTIFICATE_PATH, BOT_URL, PORT
 from espeak_bot.handler import update_handler, inline_query, error_handler
 from espeak_bot.utils import generate_random_string
 
@@ -24,7 +24,7 @@ def run_bot_service():
         webhook_path = generate_random_string(length=20)
         webhook_uri = '/' + webhook_path
         set_webhook(updater, webhook_uri)
-        update_queue = updater.start_webhook('0.0.0.0', 5000, webhook_path)
+        update_queue = updater.start_webhook('0.0.0.0', PORT, webhook_path)
     else:
         update_queue = updater.start_polling(poll_interval=0.1, timeout=10)
 
