@@ -1,0 +1,11 @@
+espeak-bot:
+  restart: always
+  image: pando85/espeak-bot
+  ports:
+     - "5000:5000"
+  volumes:
+    - ./cert.pem:/tmp/cert.pem:ro
+  environment:
+    - BOT_TOKEN= Telegram Bot API token
+    - BOT_URL= Telegram Bot URL
+    - CERTIFICATE_PATH=/tmp/cert.pem
