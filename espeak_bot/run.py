@@ -5,7 +5,7 @@ import time
 from telegram import Updater
 
 from espeak_bot import CERTIFICATE_PATH, BOT_URL
-from espeak_bot.handler import update_handler
+from espeak_bot.handler import update_handler, inline_query, error_handler
 from espeak_bot.utils import generate_random_string
 
 
@@ -17,6 +17,8 @@ def run_bot_service():
     updater = Updater(token, workers=10)
 
     updater.dispatcher.addTelegramMessageHandler(update_handler)
+    updater.dispatcher.addTelegramInlineHandler(inline_query)
+    updater.dispatcher.addErrorHandler(error_handler)
 
     if CERTIFICATE_PATH:
         webhook_path = generate_random_string(length=20)
@@ -33,6 +35,7 @@ def run_bot_service():
         except KeyboardInterrupt:
             running = False
     updater.stop()
+
 
 def set_webhook(updater, webhook_uri):
     base_url = BOT_URL
