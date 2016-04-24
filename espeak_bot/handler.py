@@ -1,8 +1,8 @@
 import logging
 from random import getrandbits
+import urllib
 
-from telegram.dispatcher import run_async
-from telegram import InlineQueryResultVideo
+from telegram import InlineQueryResultVoice
 
 from espeak_bot.reply import reply_message
 
@@ -10,7 +10,6 @@ from espeak_bot.reply import reply_message
 log = logging.getLogger(__name__)
 
 
-@run_async
 def update_handler(bot, received, **kwargs):
     log.debug('Received: %s', received)
 
@@ -29,12 +28,12 @@ def inline_query(bot, update):
 
 
 def get_inline_query_result(text, lang):
-    url_text = text.replace(' ', '%20')
+    url_text = urllib.parse.quote(text)
     url_audio = 'http://espeak.rors.org/tts?text={text}&voice={lang}&pitch=40&speed=140'.format(text=url_text, lang=lang)
 
-    return InlineQueryResultVideo(
+    return InlineQueryResultVoice(
                 id=hex(getrandbits(64))[2:],
-                video_url=url_audio,
+                voice_url=url_audio,
                 mime_type='video/mp4',
                 title=lang.upper(),
                 message_text=url_audio,

@@ -2,7 +2,7 @@ import logging
 import os
 import time
 
-from telegram import Updater
+from telegram.ext import Updater, MessageHandler, InlineQueryHandler, filters
 
 from espeak_bot import CERTIFICATE_PATH, BOT_URL
 from espeak_bot.handler import update_handler, inline_query, error_handler
@@ -16,8 +16,8 @@ def run_bot_service():
     token = os.environ['BOT_TOKEN']
     updater = Updater(token, workers=10)
 
-    updater.dispatcher.addTelegramMessageHandler(update_handler)
-    updater.dispatcher.addTelegramInlineHandler(inline_query)
+    updater.dispatcher.addHandler(MessageHandler([filters.TEXT], update_handler))
+    updater.dispatcher.addHandler(InlineQueryHandler(inline_query))
     updater.dispatcher.addErrorHandler(error_handler)
 
     if CERTIFICATE_PATH:
