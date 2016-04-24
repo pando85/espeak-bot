@@ -1,7 +1,7 @@
 FROM python:3.5
 
-ADD . /troll-bot
-WORKDIR /troll-bot
+ADD . /espeak-bot
+WORKDIR /espeak-bot
 RUN pip install -r requirements.txt
 
 # espeak and oggenc
