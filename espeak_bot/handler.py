@@ -20,24 +20,22 @@ def inline_query(bot, update):
     if update.inline_query is not None and update.inline_query.query:
         query = update.inline_query.query
 
-        results = list()
-        results.append(get_inline_query_result(query, 'es'))
-        results.append(get_inline_query_result(query, 'en'))
-
+        languages = ['es-es', 'en-us', 'es-mx', 'ca-es', 'it-it', 'pt-pt', 'ru-ru', 'fr-fr', 'de-de', 'ja-jp']
+        results = [get_inline_query_result(query, language) for language in languages]
+        
         bot.answerInlineQuery(update.inline_query.id, results=results)
 
 
 def get_inline_query_result(text, lang):
     url_text = urllib.parse.quote(text)
-    url_audio = 'http://espeak.rors.org/tts?text={text}&voice={lang}&pitch=40&speed=140'.format(text=url_text, lang=lang)
+    url_audio = 'http://www.voicerss.org/controls/speech.ashx?src={text}&hl={lang}'.format(text=url_text, lang=lang)
 
     return InlineQueryResultVoice(
                 id=hex(getrandbits(64))[2:],
                 voice_url=url_audio,
                 mime_type='video/mp4',
                 title=lang.upper(),
-                message_text=url_audio,
-                thumb_url='http://www.cem.itesm.mx/cms/ecsh/images/Frecuencia_CEM/Escucha/Audio_Icono.jpg')
+                message_text=url_audio)
 
 def error_handler(bot, update, error):
     log.warn('Update "%s" caused error "%s"' % (update, error))
