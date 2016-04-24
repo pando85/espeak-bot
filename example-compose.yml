@@ -2,7 +2,7 @@ espeak-bot:
   restart: always
   image: pando85/espeak-bot
   ports:
-     - "5000:5000"
+     - "5000:8443"
   volumes:
     - ./cert.pem:/tmp/cert.pem:ro
   environment:
