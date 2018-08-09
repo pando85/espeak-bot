@@ -16,7 +16,7 @@ def run_bot_service():
     token = os.environ['BOT_TOKEN']
     updater = Updater(token, workers=10)
 
-    updater.dispatcher.addHandler(MessageHandler([filters.TEXT], update_handler))
+    updater.dispatcher.addHandler(MessageHandler([filters.Filters.text], update_handler))
     updater.dispatcher.addHandler(InlineQueryHandler(inline_query))
     updater.dispatcher.addErrorHandler(error_handler)
 
